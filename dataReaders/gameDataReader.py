@@ -1,6 +1,7 @@
 from config import Config
 from enums.gameVersionEnum import GameVersionEnum
 from models.gameModel import GameModel
+from dataReaders.stageDataReader import StageDataReader
 
 class GameDataReader:
     def __init__(self, game_dir_name):
@@ -25,7 +26,8 @@ class GameDataReader:
 
     def read_game_data(self):
         game_timestamp = self.__get_game_timestamp()
-        game_stages = []
+        sdr = StageDataReader(self.game_dir_name)
+        game_stages = sdr.read_stages_data(game_timestamp)
         game_version = self.__get_game_version()
         gm = GameModel(game_timestamp, game_stages, game_version)
         return gm
