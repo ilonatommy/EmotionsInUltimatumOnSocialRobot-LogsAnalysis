@@ -29,22 +29,25 @@ class StageDataReader:
         emotions_audio = audio_edr.read_emotion_data()
         video_edr = EmotionsDataReader(self.game_dir_name, EmotionSourceEnum.VIDEO)
         emotions_video = video_edr.read_emotion_data()
+        meaningful_stage_id = 0
 
         for l in lines:
             if l.isspace():
                 continue
-            if stage_id != 0:
-                start_time = end_time
-            timestamp_area = re.findall(r"; on \[.*] - reached game point:", l)
-            end_time_str = re.findall(r"\[.*]", timestamp_area[0])[0][1:-1]
-            end_time = datetime.strptime(end_time_str, '%Y-%b-%d_%H:%M:%S')
             stage_name_area = re.findall(r"reached game point: .*", l)
             stage_name = stage_name_area[0][20:]
-            video_emo = filter(lambda x: x.emotion_timestamp >= start_time and \
-            x.emotion_timestamp < end_time, emotions_video)
-            audio_emo = filter(lambda x: x.emotion_timestamp >= start_time and \
-            x.emotion_timestamp < end_time, emotions_audio)
-            gsm = GameStageModel(stage_name, stage_id, start_time, end_time, video_emo, audio_emo, [])
-            game_stage_models.append(gsm)
-            stage_id += 1
+            if Config().game_stages[meaningful_stage_id] == stage_name:
+                meaningful_stage_id += 1
+                if stage_id != 0:
+                    start_time = end_time
+                timestamp_area = re.findall(r"; on \[.*] - reached game point:", l)
+                end_time_str = re.findall(r"\[.*]", timestamp_area[0])[0][1:-1]
+                end_time = datetime.strptime(end_time_str, '%Y-%b-%d_%H:%M:%S')
+                video_emo = filter(lambda x: x.emotion_timestamp >= start_time and \
+                x.emotion_timestamp < end_time, emotions_video)
+                audio_emo = filter(lambda x: x.emotion_timestamp >= start_time and \
+                x.emotion_timestamp < end_time, emotions_audio)
+                gsm = GameStageModel(stage_name, stage_id, start_time, end_time, video_emo, audio_emo, [])
+                game_stage_models.append(gsm)
+                stage_id += 1
         return game_stage_models
