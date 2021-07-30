@@ -29,7 +29,7 @@ class EmotionsDataReader:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 probabilities = []
-                for label in self.header[4:]:
+                for label in self.header[3:]:
                     probabilities.append(float(row[label]))
                 unified_probabilities = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
                 if self.emotion_source == EmotionSourceEnum.AUDIO:
