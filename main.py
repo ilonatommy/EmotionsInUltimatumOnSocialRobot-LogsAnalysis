@@ -11,6 +11,8 @@ def main():
             continue
         gdr = GameDataReader(game_dir)
         gm = gdr.read_game_data()
+        print(gm)
+        break
 
 
 if __name__ == "__main__":

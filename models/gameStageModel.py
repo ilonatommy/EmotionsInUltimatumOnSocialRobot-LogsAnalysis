@@ -14,7 +14,7 @@ class GameStageModel:
         self.emotions_survey = emotions_survey
 
     def __repr__(self):
-        return '{stage_name} ({start_time} - {end_time})\n{emotions_video}\n{emotions_audio}\n{emotions_survey}\n'.format(\
+        return '\n\n{stage_name} ({start_time} - {end_time})\n{emotions_video}\n{emotions_audio}\n{emotions_survey}\n'.format(\
         stage_name=self.stage_name, \
         start_time=self.start_time, \
         end_time=self.end_time, \
@@ -23,7 +23,7 @@ class GameStageModel:
         emotions_survey=self.emotions_survey)
 
     def __str__(self):
-        return '{stage_name} ({start_time} - {end_time})\n{emotions_video}\n{emotions_audio}\n{emotions_survey}\n'.format(\
+        return '\n\n{stage_name} ({start_time} - {end_time})\n{emotions_video}\n{emotions_audio}\n{emotions_survey}\n'.format(\
         stage_name=self.stage_name, \
         start_time=self.start_time, \
         end_time=self.end_time, \
