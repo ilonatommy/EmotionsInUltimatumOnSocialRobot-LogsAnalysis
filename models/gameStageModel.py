@@ -7,7 +7,7 @@ import numpy as np
 
 class GameStageModel:
     def __init__(self, stage_name, stage_id, start_time, end_time, emotions_video, emotions_audio, emotion_survey, sensor_filterd_emotion=None):
-        # type: (GameStageModel, str, int, datetime, datetime, [EmotionModel], [EmotionModel], [EmotionModel], EmotionModel) -> None:
+        # type: (GameStageModel, str, int, datetime, datetime, [EmotionModel], [EmotionModel], EmotionModel, EmotionModel) -> None:
         self.stage_name = stage_name
         self.stage_id = stage_id
         self.start_time = start_time
