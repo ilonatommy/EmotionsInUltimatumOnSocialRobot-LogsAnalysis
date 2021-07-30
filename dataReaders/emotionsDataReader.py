@@ -30,6 +30,13 @@ class EmotionsDataReader:
                 probabilities = []
                 for label in self.header[4:]:
                     probabilities.append(float(row[label]))
+                unified_probabilities = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+                if self.emotion_source == EmotionSourceEnum.AUDIO:
+                    unified_probabilities[:-1] = probabilities
+                else:
+                    unified_probabilities[0] = probabilities[0]
+                    unified_probabilities[2:4] = probabilities[1:3]
+                    unified_probabilities[5:] = probabilities[-2:]
                 timestamp = datetime.strptime(row['filename'][:-11], '%Y-%b-%d_%H:%M:%S')
                 emotion = EmotionModel(timestamp, self.emotion_source, \
                      row['filename'], row['max_emotion'], probabilities, row['emotion_label'])
