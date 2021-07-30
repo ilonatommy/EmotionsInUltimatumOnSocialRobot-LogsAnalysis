@@ -6,6 +6,7 @@ import re
 import os
 import csv
 from datetime import datetime
+import numpy as np
 
 
 class EmotionsDataReader:
@@ -39,6 +40,7 @@ class EmotionsDataReader:
                     unified_probabilities[5:] = probabilities[-2:]
                 timestamp = datetime.strptime(row['filename'][:-11], '%Y-%b-%d_%H:%M:%S')
                 emotion = EmotionModel(timestamp, self.emotion_source, \
-                     row['filename'], row['max_emotion'], probabilities, row['emotion_label'])
+                     row['filename'], row['max_emotion'], \
+                     np.array(unified_probabilities), row['emotion_label'])
                 emotions.append(emotion)
         return emotions
