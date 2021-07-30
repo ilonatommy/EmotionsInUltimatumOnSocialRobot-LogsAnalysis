@@ -6,6 +6,7 @@ import re
 import os
 import csv
 from datetime import datetime
+import numpy as np
 
 
 class SurveyResultsDataReader:
@@ -32,7 +33,7 @@ class SurveyResultsDataReader:
                     probabilities[int(Config().emotion_indices[Config().\
                     survey_labels_dict[max_emo]])] = max_emo_percentage
                     emotion = EmotionModel(timestamp, EmotionSourceEnum.SURVEY, \
-                        "", row['1'], probabilities, \
+                        "", row['1'], np.array(probabilities), \
                         Config().survey_labels_dict[max_emo])
                     emotions.append(emotion)
         return emotions

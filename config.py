@@ -1,5 +1,6 @@
 class Config:
     def __init__(self):
+        self.audio_ratio = 0.3
         self.emotion_labels = {
         0: 'AN',
         1: 'DI',

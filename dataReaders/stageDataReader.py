@@ -2,6 +2,7 @@ from config import Config
 from enums.emotionSourceEnum import EmotionSourceEnum
 from models.gameStageModel import GameStageModel
 from dataReaders.emotionsDataReader import EmotionsDataReader
+from dataFilters.sensorDataFilter import SensorDataFilter
 
 import re
 import os
@@ -30,6 +31,7 @@ class StageDataReader:
         video_edr = EmotionsDataReader(self.game_dir_name, EmotionSourceEnum.VIDEO)
         emotions_video = video_edr.read_emotion_data()
         meaningful_stage_id = 0
+        sdf = SensorDataFilter()
 
         for l in lines:
             if l.isspace():
@@ -49,5 +51,6 @@ class StageDataReader:
                 x.emotion_timestamp < end_time, emotions_audio)
                 gsm = GameStageModel(stage_name, stage_id, start_time, end_time, video_emo, audio_emo, [])
                 game_stage_models.append(gsm)
+                gsm.sensor_filterd_emotion = sdf.filter_stage_emotions(gsm)
                 stage_id += 1
         return game_stage_models

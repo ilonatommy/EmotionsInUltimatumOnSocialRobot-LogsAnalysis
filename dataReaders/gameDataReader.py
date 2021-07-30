@@ -30,7 +30,7 @@ class GameDataReader:
 
     def __update_game_stages_with_survey(self, game_stages, survey_emotions):
         for stage, emo in zip(game_stages, survey_emotions):
-            stage.emotions_survey.append(emo)
+            stage.emotion_survey = emo
         return game_stages
 
     def read_game_data(self):
