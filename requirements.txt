@@ -1,0 +1,9 @@
+enum34==1.1.10
+numpy==1.16.6
+pkg-resources==0.0.0
+Keras==2.3.1
+librosa==0.7.0
+llvmlite==0.29.0
+numba==0.45.0
+Pillow==6.2.2
+tensorflow==2.0.0

@@ -28,6 +28,8 @@ class Config:
         'DI', 'FE', 'HA', 'NE', 'SA']
         self.video_header = ['filename', 'max_emotion', 'emotion_label', 'AN', \
         'FE', 'HA', 'SA', 'SU']
+        self.audio_labels = ['AN', 'DI', 'FE', 'HA', 'NE', 'SA']
+        self.video_labels = ['AN', 'FE', 'HA', 'SA', 'SU']
         self.survey_header = ["timestamp","1","1a","2","2a","3","3a","4","4a",\
         "5","5a","6","6a","7","v","name","blank","Equal","SoftEqual"]
         self.survey_labels_dict = {
@@ -55,3 +57,4 @@ class Config:
         'onStartRound4', \
         'gameEnd' \
         ]
+        self.reanalysis_path = './logs_re_analysis'

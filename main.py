@@ -1,4 +1,5 @@
 from statistics.dataAnalyser import DataAnalyser
+from aiAnalysers.videoAnalyser import VideoAnalyser
 
 
 def main():
