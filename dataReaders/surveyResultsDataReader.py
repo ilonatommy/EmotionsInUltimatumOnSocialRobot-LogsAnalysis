@@ -26,14 +26,27 @@ class SurveyResultsDataReader:
                     max_emo = row[str(stage_idx + 1)]
                     next_max_emo = row[str(stage_idx + 1) + "a"]
                     max_emo_percentage = 1.0
+                    emotion = []
                     if next_max_emo != "":
                         max_emo_percentage = 0.7
                         probabilities[int(Config().emotion_indices[Config().\
+                        survey_labels_dict[max_emo]])] = max_emo_percentage
+                        probabilities[int(Config().emotion_indices[Config().\
                         survey_labels_dict[next_max_emo]])] = 1.0 - max_emo_percentage
-                    probabilities[int(Config().emotion_indices[Config().\
-                    survey_labels_dict[max_emo]])] = max_emo_percentage
-                    emotion = EmotionModel(timestamp, EmotionSourceEnum.SURVEY, \
+
+                    else:
+                        probabilities[int(Config().emotion_indices[Config().\
+                        survey_labels_dict[max_emo]])] = max_emo_percentage
+                    emotion.append(
+                        EmotionModel(timestamp, EmotionSourceEnum.SURVEY, \
                         "", row['1'], np.array(probabilities), \
-                        Config().survey_labels_dict[max_emo])
+                        Config().survey_labels_dict[max_emo]),
+                    )
+                    if next_max_emo != "":
+                        emotion.append(
+                            EmotionModel(timestamp, EmotionSourceEnum.SURVEY, \
+                            "", row['1'], np.array(probabilities), \
+                            Config().survey_labels_dict[next_max_emo])
+                        )
                     emotions.append(emotion)
         return emotions

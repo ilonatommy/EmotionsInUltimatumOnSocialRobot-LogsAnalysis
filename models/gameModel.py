@@ -21,3 +21,8 @@ class GameModel:
         version=self.version, \
         game_timestamp=self.game_timestamp, \
         game_stages=self.game_stages)
+
+    def update_game_stages_with_survey(self, game_stages, survey_emotions):
+        for stage, emo in zip(game_stages, survey_emotions):
+            stage.emotions_survey = emo
+        return game_stages

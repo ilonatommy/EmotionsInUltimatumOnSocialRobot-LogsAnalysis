@@ -23,10 +23,14 @@ class SensorDataFilter:
     def filter_stage_emotions(self, stage):
         probs_v = stage.get_video_emotions_probabilities()
         probs_a = stage.get_audio_emotions_probabilities()
-        mean_probs_v = self.__try_mean_probs(probs_v)
-        mean_probs_a = self.__try_mean_probs(probs_a)
-        filtered_emos = mean_probs_v * self.video_ratio + mean_probs_a * \
-        self.audio_ratio
+        if len(probs_v.shape) == len(probs_a.shape):
+            probs = np.append(probs_v, probs_a, 0)
+        else:
+            if len(probs_v.shape) == 1:
+                probs = probs_a
+            else:
+                probs = probs_v
+        filtered_emos = self.__try_mean_probs(probs)
         max_class = np.argmax(filtered_emos)
         return EmotionModel(stage.start_time, \
         EmotionSourceEnum.FILTERED_SENSORS, \

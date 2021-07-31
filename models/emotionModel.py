@@ -21,9 +21,3 @@ class EmotionModel:
     def __str__(self):
         return '{emotion_label}'.format(\
         emotion_label=self.emotion_label)
-
-    def __eq__(self, x):
-        if self.emotion_class == x.emotion_class and \
-        self.emotion_label == x.emotion_label:
-            return True
-        return False
