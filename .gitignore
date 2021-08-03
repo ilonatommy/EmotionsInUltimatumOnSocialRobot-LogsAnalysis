@@ -1,6 +1,8 @@
 /logs/*
 /aiAnalysers/AI_models/*
 /logs_re_analysis/*
+/aiAnalysers/my_AI_models/*
+/aiAnalysers/reference_AI_models/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -10,11 +10,12 @@ from datetime import datetime
 
 
 class StageDataReader:
-    def __init__(self, game_dir_name):
+    def __init__(self, game_dir_name, logs_path=Config().logs_path):
         self.game_dir_name = game_dir_name
+        self.logs_path = logs_path
 
     def __read_file_lines(self, file_name):
-        stages_file = os.path.join(Config().logs_path, self.game_dir_name, \
+        stages_file = os.path.join(self.logs_path, self.game_dir_name, \
         file_name)
         with open(stages_file, 'r') as f:
             file_lines = f.readlines()
@@ -54,3 +55,16 @@ class StageDataReader:
                 gsm.sensor_filterd_emotion = sdf.filter_stage_emotions(gsm)
                 stage_id += 1
         return game_stage_models
+
+    def update_stage_with_reference_audio_data(self, stage):
+        edr = EmotionsDataReader(self.game_dir_name, EmotionSourceEnum.AUDIO, \
+            Config().reanalysis_path)
+        reference_emotions_audio = edr.read_emotion_data()
+        stage_ref_emos = []
+        for ea in stage.emotions_audio:
+            reference_emo = filter(lambda x: x.emotion_timestamp == \
+            ea.emotion_timestamp, reference_emotions_audio)
+            if len(reference_emo) != 0:
+                stage_ref_emos.append(reference_emo[0])
+        stage.reference_emotions_audio = stage_ref_emos
+        return stage

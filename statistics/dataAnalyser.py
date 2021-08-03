@@ -20,19 +20,23 @@ class DataAnalyser:
         survey_success_rate = float(percentage/len(games))
         return survey_success_rate
 
-    def run_logs_analysis(self):
+    def get_all_games_data(self):
         games = []
-        i = 0
         for game_dir in sorted(os.listdir(Config().logs_path)):
             if '.' in game_dir:
                 continue
             gdr = GameDataReader(game_dir)
             gm = gdr.read_game_data()
             games.append(gm)
+        return games
+
+    def run_logs_analysis(self):
+        games = self.get_all_games_data()
         srdr = SurveyResultsDataReader()
         survey_emotions = srdr.read_emotion_data()
         for g_idx, g in enumerate(games):
             g.game_stages = g.update_game_stages_with_survey(g.game_stages, \
             survey_emotions[g_idx*6:(g_idx+1)*6])
+            g.game_stages = g.update_game_stages_with_reference_data(g.game_stages)
         surveys_success_rate = self.__get_games_stats(games)
-        return surveys_success_rate
+        print("My AI vs survey acc: {0}".format(surveys_success_rate))

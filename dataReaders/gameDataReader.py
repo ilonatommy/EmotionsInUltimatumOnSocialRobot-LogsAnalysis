@@ -2,8 +2,7 @@ from config import Config
 from enums.gameVersionEnum import GameVersionEnum
 from models.gameModel import GameModel
 from dataReaders.stageDataReader import StageDataReader
-
-from datetime import datetime
+from helpers import *
 
 
 class GameDataReader:
@@ -23,9 +22,9 @@ class GameDataReader:
     def __get_game_timestamp(self):
         last_char = self.game_dir_name[-1]
         if last_char.isdigit():
-            return datetime.strptime(self.game_dir_name, '%Y-%b-%d_%H:%M:%S')
+            return str2timestamp(self.game_dir_name)
         else:
-            return datetime.strptime(self.game_dir_name[:-1], '%Y-%b-%d_%H:%M:%S')
+            return str2timestamp(self.game_dir_name[:-1])
 
     def read_game_data(self):
         game_timestamp = self.__get_game_timestamp()

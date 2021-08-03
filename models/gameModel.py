@@ -1,6 +1,8 @@
-from datetime import datetime
+from config import Config
 from gameStageModel import GameStageModel
 from enums.gameVersionEnum import GameVersionEnum
+from dataReaders.stageDataReader import StageDataReader
+from helpers import *
 
 
 class GameModel:
@@ -25,4 +27,12 @@ class GameModel:
     def update_game_stages_with_survey(self, game_stages, survey_emotions):
         for stage, emo in zip(game_stages, survey_emotions):
             stage.emotions_survey = emo
+        return game_stages
+
+    def update_game_stages_with_reference_data(self, game_stages):
+        game_dir_name = timestamp2str(self.game_timestamp) + \
+            version2str(self.version)
+        for stage in game_stages:
+            sdr = StageDataReader(game_dir_name, Config().reanalysis_path)
+            stage = sdr.update_stage_with_reference_audio_data(stage)
         return game_stages
