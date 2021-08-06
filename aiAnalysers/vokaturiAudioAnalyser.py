@@ -32,7 +32,7 @@ class VakaturiAudioAnalyser:
             emotion_probabilities = EmotionProbabilities()
             voice.extract(quality, emotion_probabilities)
             with open(current_game_audio_csv, 'a') as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=Config().audio_header)
+                writer = csv.DictWriter(csvfile, fieldnames=Config().audio_reanalysis_header)
                 predictions = [
                     emotion_probabilities.anger,
                     emotion_probabilities.fear,
@@ -45,16 +45,15 @@ class VakaturiAudioAnalyser:
                     writer.writerow({\
                         'filename': os.path.basename(rec_path), \
                         'max_emotion': predicted_emotion, \
-                        'emotion_label': Config().audio_labels[predicted_emotion], \
+                        'emotion_label': Config().vokaturi_labels[predicted_emotion], \
                         'AN': predictions[0], \
-                        'DI': 0.0, \
                         'FE': predictions[1], \
                         'HA': predictions[2], \
                         'NE': predictions[3], \
                         'SA': predictions[4]})
             voice.destroy()
-        except:
-            print(rec_path)
+        except Exception, e:
+            print('{0}\n{1}'.format(rec_path, e))
 
     def analyse_audio_logs(self):
         self.clean_audio_logs()
@@ -70,7 +69,7 @@ class VakaturiAudioAnalyser:
                 os.path.basename(os.path.normpath(game_logs_path) + ".csv")
                 )
             with open(current_game_audio_csv, 'w') as csvfile:
-                writer = csv.DictWriter(csvfile, fieldnames=Config().audio_header)
+                writer = csv.DictWriter(csvfile, fieldnames=Config().audio_reanalysis_header)
                 writer.writeheader()
             for rec in os.listdir(game_data_path):
                 self.__analyse_audio(\

@@ -1,6 +1,7 @@
 from statisticalAnalysers.dataAnalyser import DataAnalyser
 from aiAnalysers.videoAnalyser import VideoAnalyser
 from aiAnalysers.vokaturiAudioAnalyser import VakaturiAudioAnalyser
+from aiAnalysers.merVideoAnalyser import MERVideoAnalyser
 
 import sys
 
@@ -15,7 +16,8 @@ def main(mode="analysis"):
         vaa.analyse_audio_logs()
         sys.exit(0)
     if mode == "video_reanalysis":
-        pass
+        merva = MERVideoAnalyser()
+        merva.analyse_video_logs()
         sys.exit(0)
 
 

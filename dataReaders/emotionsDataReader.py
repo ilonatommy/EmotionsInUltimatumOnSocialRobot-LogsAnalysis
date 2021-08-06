@@ -14,12 +14,20 @@ class EmotionsDataReader:
         self.logs_path = logs_path
         self.game_dir_name = game_dir_name
         self.emotion_source = emotion_source
-        if emotion_source == EmotionSourceEnum.AUDIO:
-            self.classifier_path = Config().audio_classifier_path
-            self.header = Config().audio_header
-        if emotion_source == EmotionSourceEnum.VIDEO:
-            self.classifier_path = Config().video_classifier_path
-            self.header = Config().video_header
+        if logs_path == Config().logs_path:
+            if emotion_source == EmotionSourceEnum.AUDIO:
+                self.classifier_path = Config().audio_classifier_path
+                self.header = Config().audio_header
+            if emotion_source == EmotionSourceEnum.VIDEO:
+                self.classifier_path = Config().video_classifier_path
+                self.header = Config().video_header
+        else:
+            if emotion_source == EmotionSourceEnum.AUDIO:
+                self.classifier_path = Config().audio_classifier_path
+                self.header = Config().audio_reanalysis_header
+            if emotion_source == EmotionSourceEnum.VIDEO:
+                self.classifier_path = Config().video_classifier_path
+                self.header = Config().video_reanalysis_header
 
     def read_emotion_data(self):
         emotions = []
