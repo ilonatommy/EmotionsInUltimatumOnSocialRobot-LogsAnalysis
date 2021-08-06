@@ -17,10 +17,11 @@ class GameStageModel:
             emotions_survey,
             sensor_filterd_emotion=None,
             reference_emotions_audio=[],
-            reference_emotions_video=[]):
+            reference_emotions_video=[],
+            reference_filterd_emotion=None,):
         # type: (GameStageModel, str, int, datetime, datetime, [EmotionModel], \
         # [EmotionModel], [EmotionModel], EmotionModel, [EmotionModel], \
-        # [EmotionModel]) -> None:
+        # [EmotionModel], EmotionModel) -> None:
         self.stage_name = stage_name
         self.stage_id = stage_id
         self.start_time = start_time
@@ -31,6 +32,7 @@ class GameStageModel:
         self.sensor_filterd_emotion = sensor_filterd_emotion
         self.reference_emotions_audio = reference_emotions_audio
         self.reference_emotions_video = reference_emotions_video
+        self.reference_filterd_emotion = reference_filterd_emotion
 
     def get_video_emotions_probabilities(self):
         probs = []
@@ -44,8 +46,20 @@ class GameStageModel:
             probs.append(ev.probabilities)
         return np.array(probs)
 
+    def get_reference_video_emotions_probabilities(self):
+        probs = []
+        for ev in self.reference_emotions_video:
+            probs.append(ev.probabilities)
+        return np.array(probs)
+
+    def get_reference_audio_emotions_probabilities(self):
+        probs = []
+        for ev in self.reference_emotions_audio:
+            probs.append(ev.probabilities)
+        return np.array(probs)
+
     def __repr__(self):
-        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE {video_source}: {reference_emotions_video}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
+        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE FILTERED: {reference_filterd_emotion}\nREFERENCE {video_source}: {reference_emotions_video}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
         stage_name=self.stage_name, \
         start_time=self.start_time, \
         end_time=self.end_time, \
@@ -58,10 +72,11 @@ class GameStageModel:
         filtered_sensors_source=EmotionSourceEnum.FILTERED_SENSORS, \
         sensor_filterd_emotion=self.sensor_filterd_emotion, \
         reference_emotions_video=self.reference_emotions_video, \
-        reference_emotions_audio=self.reference_emotions_audio)
+        reference_emotions_audio=self.reference_emotions_audio, \
+        reference_filterd_emotion=self.reference_filterd_emotion)
 
     def __str__(self):
-        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE {video_source}: {reference_emotions_video}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
+        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE FILTERED: {reference_filterd_emotion}\nREFERENCE {video_source}: {reference_emotions_video}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
         stage_name=self.stage_name, \
         start_time=self.start_time, \
         end_time=self.end_time, \
@@ -74,4 +89,5 @@ class GameStageModel:
         filtered_sensors_source=EmotionSourceEnum.FILTERED_SENSORS, \
         sensor_filterd_emotion=self.sensor_filterd_emotion, \
         reference_emotions_video=self.reference_emotions_video, \
-        reference_emotions_audio=self.reference_emotions_audio)
+        reference_emotions_audio=self.reference_emotions_audio, \
+        reference_filterd_emotion=self.reference_filterd_emotion)

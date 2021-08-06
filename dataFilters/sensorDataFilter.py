@@ -20,9 +20,10 @@ class SensorDataFilter:
             except RuntimeWarning:
                 return np.zeros(7)
 
-    def filter_stage_emotions(self, stage):
-        probs_v = stage.get_video_emotions_probabilities()
-        probs_a = stage.get_audio_emotions_probabilities()
+    def filter_stage_emotions(self, stage, get_stage_video_probabilities_fun, \
+        get_stage_audio_probabilities_fun):
+        probs_v = get_stage_video_probabilities_fun()
+        probs_a = get_stage_audio_probabilities_fun()
         if len(probs_v.shape) == len(probs_a.shape):
             probs = np.append(probs_v, probs_a, 0)
         else:

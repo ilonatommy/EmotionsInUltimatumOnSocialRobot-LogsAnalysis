@@ -52,11 +52,13 @@ class StageDataReader:
                 x.emotion_timestamp < end_time, emotions_audio)
                 gsm = GameStageModel(stage_name, stage_id, start_time, end_time, video_emo, audio_emo, [])
                 game_stage_models.append(gsm)
-                gsm.sensor_filterd_emotion = sdf.filter_stage_emotions(gsm)
+                gsm.sensor_filterd_emotion = sdf.filter_stage_emotions(gsm, \
+                    gsm.get_video_emotions_probabilities, \
+                    gsm.get_audio_emotions_probabilities)
                 stage_id += 1
         return game_stage_models
 
-    def update_stage_with_reference_audio_data(self, stage):
+    def __update_stage_with_reference_audio_data(self, stage):
         edr = EmotionsDataReader(self.game_dir_name, EmotionSourceEnum.AUDIO, \
             Config().reanalysis_path)
         reference_emotions_audio = edr.read_emotion_data()
@@ -69,7 +71,7 @@ class StageDataReader:
         stage.reference_emotions_audio = stage_ref_emos
         return stage
 
-    def update_stage_with_reference_video_data(self, stage):
+    def __update_stage_with_reference_video_data(self, stage):
         edr = EmotionsDataReader(self.game_dir_name, EmotionSourceEnum.VIDEO, \
             Config().reanalysis_path)
         reference_emotions_video = edr.read_emotion_data()
@@ -81,3 +83,11 @@ class StageDataReader:
                 stage_ref_emos.append(reference_emo[0])
         stage.reference_emotions_video = stage_ref_emos
         return stage
+
+    def update_stage_with_reference_data(self, stage):
+        stage = self.__update_stage_with_reference_audio_data(stage)
+        stage = self.__update_stage_with_reference_video_data(stage)
+        sdf = SensorDataFilter()
+        stage.reference_filterd_emotion = sdf.filter_stage_emotions(stage, \
+            stage.get_reference_video_emotions_probabilities, \
+            stage.get_reference_audio_emotions_probabilities)

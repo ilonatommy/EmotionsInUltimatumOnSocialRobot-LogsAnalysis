@@ -20,13 +20,12 @@ def rgb2gray(img):
 
 class MERVideoAnalyser:
     def __init__(self):
-        AI_MODEL = os.path.join(os.getcwd(), './aiAnalysers/reference_AI_models/video/video.h5')
+        AI_MODEL = os.path.join(os.getcwd(), './aiAnalysers/reference_AI_models/video/model.h5')
         self.model = load_model(AI_MODEL, compile=False)
 
     def __analyse_video(self, current_game_video_csv, im_path):
         im = Image.open(im_path)
         im48x48 = im.resize((48, 48), Image.ANTIALIAS)
-        im48x48.save('somepic.jpg')
         arrIm = rgb2gray(np.array(im48x48))
         cropped_bin_versor = np.reshape(arrIm.flatten(), (1, 48, 48, 1))
         predictions = self.model.predict(cropped_bin_versor)
