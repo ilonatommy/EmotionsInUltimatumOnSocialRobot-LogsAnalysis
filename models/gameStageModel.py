@@ -45,7 +45,7 @@ class GameStageModel:
         return np.array(probs)
 
     def __repr__(self):
-        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
+        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE {video_source}: {reference_emotions_video}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
         stage_name=self.stage_name, \
         start_time=self.start_time, \
         end_time=self.end_time, \
@@ -57,10 +57,11 @@ class GameStageModel:
         emotions_survey=self.emotions_survey, \
         filtered_sensors_source=EmotionSourceEnum.FILTERED_SENSORS, \
         sensor_filterd_emotion=self.sensor_filterd_emotion, \
+        reference_emotions_video=self.reference_emotions_video, \
         reference_emotions_audio=self.reference_emotions_audio)
 
     def __str__(self):
-        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
+        return '\n\n{stage_name} ({start_time} - {end_time})\n{video_source}: ''{emotions_video}\n{audio_source}: {emotions_audio}\n{survey_source}: {emotions_survey}\n{filtered_sensors_source}: {sensor_filterd_emotion}\nREFERENCE {video_source}: {reference_emotions_video}\nREFERENCE {audio_source}: {reference_emotions_audio}'.format(\
         stage_name=self.stage_name, \
         start_time=self.start_time, \
         end_time=self.end_time, \
@@ -72,4 +73,5 @@ class GameStageModel:
         emotions_survey=self.emotions_survey, \
         filtered_sensors_source=EmotionSourceEnum.FILTERED_SENSORS, \
         sensor_filterd_emotion=self.sensor_filterd_emotion, \
+        reference_emotions_video=self.reference_emotions_video, \
         reference_emotions_audio=self.reference_emotions_audio)

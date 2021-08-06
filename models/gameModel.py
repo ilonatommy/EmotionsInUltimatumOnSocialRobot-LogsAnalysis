@@ -35,4 +35,5 @@ class GameModel:
         for stage in game_stages:
             sdr = StageDataReader(game_dir_name, Config().reanalysis_path)
             stage = sdr.update_stage_with_reference_audio_data(stage)
+            stage = sdr.update_stage_with_reference_video_data(stage)
         return game_stages

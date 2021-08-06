@@ -8,12 +8,30 @@ class GameAnalyser:
     def __init__(self):
         pass
 
-    def get_my_ai_vs_survey_coherent_emotions_percentage(self, game):
+    def get_my_ai_filtered_vs_survey_coherent_emotions_percentage(self, game):
         coherent_emos = 0.0
         for stage in game.game_stages:
             if(self.are_emotions_equal(\
             stage.emotions_survey,\
             [stage.sensor_filterd_emotion])):
+                coherent_emos += 1.0
+        return float(coherent_emos/float(len(game.game_stages)))
+
+    def get_my_ai_audio_vs_survey_coherent_emotions_percentage(self, game):
+        coherent_emos = 0.0
+        for stage in game.game_stages:
+            if(self.are_emotions_equal(\
+            stage.emotions_survey,\
+            stage.emotions_audio)):
+                coherent_emos += 1.0
+        return float(coherent_emos/float(len(game.game_stages)))
+
+    def get_my_ai_video_vs_survey_coherent_emotions_percentage(self, game):
+        coherent_emos = 0.0
+        for stage in game.game_stages:
+            if(self.are_emotions_equal(\
+            stage.emotions_survey,\
+            stage.emotions_video)):
                 coherent_emos += 1.0
         return float(coherent_emos/float(len(game.game_stages)))
 

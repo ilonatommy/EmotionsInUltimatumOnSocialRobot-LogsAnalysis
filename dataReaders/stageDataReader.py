@@ -68,3 +68,16 @@ class StageDataReader:
                 stage_ref_emos.append(reference_emo[0])
         stage.reference_emotions_audio = stage_ref_emos
         return stage
+
+    def update_stage_with_reference_video_data(self, stage):
+        edr = EmotionsDataReader(self.game_dir_name, EmotionSourceEnum.VIDEO, \
+            Config().reanalysis_path)
+        reference_emotions_video = edr.read_emotion_data()
+        stage_ref_emos = []
+        for ea in stage.emotions_video:
+            reference_emo = filter(lambda x: x.emotion_timestamp == \
+            ea.emotion_timestamp, reference_emotions_video)
+            if len(reference_emo) != 0:
+                stage_ref_emos.append(reference_emo[0])
+        stage.reference_emotions_video = stage_ref_emos
+        return stage
