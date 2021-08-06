@@ -1,5 +1,5 @@
 from config import Config
-from statistics.gameAnalyser import GameAnalyser
+from gameAnalyser import GameAnalyser
 from models.gameModel import GameModel
 from config import Config
 from dataReaders.gameDataReader import GameDataReader
@@ -12,13 +12,21 @@ class DataAnalyser:
     def __init__(self):
         pass
 
-    def __get_games_stats(self, games):
+    def __get_my_ai_vs_survey_success_rate(self, games):
         ga = GameAnalyser()
         percentage = 0.0
         for game in games:
-            percentage += ga.get_coherent_emotions_percentage(game)
-        survey_success_rate = float(percentage/len(games))
-        return survey_success_rate
+            percentage += \
+                ga.get_my_ai_vs_survey_coherent_emotions_percentage(game)
+        return float(percentage/len(games))
+
+    def __get_reference_ai_vs_survey_success_rate(self, games):
+        ga = GameAnalyser()
+        percentage = 0.0
+        for game in games:
+            percentage += \
+                ga.get_reference_ai_vs_survey_coherent_emotions_percentage(game)
+        return float(percentage/len(games))
 
     def get_all_games_data(self):
         games = []
@@ -38,5 +46,10 @@ class DataAnalyser:
             g.game_stages = g.update_game_stages_with_survey(g.game_stages, \
             survey_emotions[g_idx*6:(g_idx+1)*6])
             g.game_stages = g.update_game_stages_with_reference_data(g.game_stages)
-        surveys_success_rate = self.__get_games_stats(games)
-        print("My AI vs survey acc: {0}".format(surveys_success_rate))
+        my_ai_vs_survey_success_rate = \
+            self.__get_my_ai_vs_survey_success_rate(games)
+        ref_ai_vs_survey_success_rate = \
+            self.__get_reference_ai_vs_survey_success_rate(games)
+        print("My AI vs survey acc: {0}\nReference AI vs survey acc: {1}".format(\
+            my_ai_vs_survey_success_rate, \
+            ref_ai_vs_survey_success_rate))

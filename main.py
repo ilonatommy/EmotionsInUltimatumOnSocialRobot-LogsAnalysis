@@ -1,4 +1,4 @@
-from statistics.dataAnalyser import DataAnalyser
+from statisticalAnalysers.dataAnalyser import DataAnalyser
 from aiAnalysers.videoAnalyser import VideoAnalyser
 from aiAnalysers.vokaturiAudioAnalyser import VakaturiAudioAnalyser
 

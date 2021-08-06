@@ -10,6 +10,7 @@ sys.path.append("aiAnalysers/reference_AI_models/audio/api")
 from reference_AI_models.audio.api.Vokaturi import *
 
 # CODE IN THIS FILE ORIGINATES FROM PYTHON LIBRARY: https://vokaturi.com/
+# reported acc on the five built-in emotions is 76.1%
 
 
 class VakaturiAudioAnalyser:
