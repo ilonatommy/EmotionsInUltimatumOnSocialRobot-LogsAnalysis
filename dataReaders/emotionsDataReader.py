@@ -45,9 +45,10 @@ class EmotionsDataReader:
                     unified_probabilities[0] = probabilities[0]
                     unified_probabilities[2:4] = probabilities[1:3]
                     unified_probabilities[5:] = probabilities[-2:]
+                max_emotion = np.argmax(unified_probabilities)
                 timestamp = datetime.strptime(row['filename'][:-11], '%Y-%b-%d_%H:%M:%S')
                 emotion = EmotionModel(timestamp, self.emotion_source, \
-                     row['filename'], row['max_emotion'], \
+                     row['filename'], max_emotion, \
                      np.array(unified_probabilities), row['emotion_label'])
                 emotions.append(emotion)
         return emotions
@@ -72,9 +73,10 @@ class EmotionsDataReader:
                     unified_probabilities[4] = probabilities[6]
                     unified_probabilities[5] = probabilities[4]
                     unified_probabilities[6] = probabilities[5]
+                max_emotion = np.argmax(unified_probabilities)
                 timestamp = datetime.strptime(row['filename'][:-11], '%Y-%b-%d_%H:%M:%S')
                 emotion = EmotionModel(timestamp, self.emotion_source, \
-                     row['filename'], row['max_emotion'], \
+                     row['filename'], max_emotion, \
                      np.array(unified_probabilities), row['emotion_label'])
                 emotions.append(emotion)
         return emotions
