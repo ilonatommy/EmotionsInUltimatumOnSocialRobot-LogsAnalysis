@@ -9,7 +9,7 @@ import sys
 def main(mode="analysis"):
     if mode == "analysis":
         da = DataAnalyser()
-        survey_success_rate = da.run_logs_analysis()
+        survey_success_rate = da.run_logs_analysis(True)
         sys.exit(0)
     if mode == "audio_reanalysis":
         vaa = VakaturiAudioAnalyser()

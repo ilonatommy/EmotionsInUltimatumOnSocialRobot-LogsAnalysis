@@ -64,3 +64,4 @@ class Config:
             'emotion_label', 'AN', 'DI', 'FE', 'HA', 'SA', 'SU', 'NE']
         self.audio_reanalysis_header = ['filename', 'max_emotion', \
             'emotion_label', 'AN', 'FE', 'HA', 'NE', 'SA']
+        self.plot_results_path = "./plots"

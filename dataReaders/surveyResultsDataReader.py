@@ -15,6 +15,7 @@ class SurveyResultsDataReader:
 
     def read_emotion_data(self):
         emotions = []
+        version_equals_opinion = []
         csv_file = os.path.join(Config().logs_path, \
         Config().survey_file_name)
         with open(csv_file, 'r') as csvfile:
@@ -49,4 +50,5 @@ class SurveyResultsDataReader:
                             Config().survey_labels_dict[next_max_emo])
                         )
                     emotions.append(emotion)
-        return emotions
+                    version_equals_opinion.append(row['SoftEqual'] == "1")
+        return emotions, version_equals_opinion

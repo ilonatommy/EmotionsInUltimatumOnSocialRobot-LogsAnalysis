@@ -3,6 +3,7 @@
 /logs_re_analysis/*
 /aiAnalysers/my_AI_models/*
 /aiAnalysers/reference_AI_models/*
+/plots/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
