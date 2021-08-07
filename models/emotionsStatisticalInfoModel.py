@@ -27,9 +27,12 @@ class EmotionsStatisticalInfoModel:
 
     def __repr__(self):
         sign = ""
+        overall_score = self.__all_correct_samples
         if self.mode == "percentage":
             sign = "%"
-        return 'AN: {can}{sign}/{an}{sign}, DI: {cdi}{sign}/{di}{sign}, FE: {cfe}{sign}/{fe}{sign}, HA: {cha}{sign}/{ha}{sign}, NE: {cne}{sign}/{ne}{sign}, SA: {csa}{sign}/{sa}{sign}, SU: {csu}{sign}/{su}{sign}'.format(\
+            overall_score /= float(self.__all_samples_counter) *0.01
+
+        return 'TOTAL: {overall_score}\nAN: {can}{sign}/{an}{sign}, DI: {cdi}{sign}/{di}{sign}, FE: {cfe}{sign}/{fe}{sign}, HA: {cha}{sign}/{ha}{sign}, NE: {cne}{sign}/{ne}{sign}, SA: {csa}{sign}/{sa}{sign}, SU: {csu}{sign}/{su}{sign}'.format(\
             an=self.__classes_counter['AN'], \
             di=self.__classes_counter['DI'], \
             fe=self.__classes_counter['FE'], \
@@ -45,13 +48,17 @@ class EmotionsStatisticalInfoModel:
             csa=self.__correct_samples_counter['SA'], \
             csu=self.__correct_samples_counter['SU'], \
             sign=sign, \
+            overall_score=overall_score, \
         )
 
     def __str__(self):
         sign = ""
+        overall_score = self.__all_correct_samples
         if self.mode == "percentage":
             sign = "%"
-        return 'AN: {can}{sign}/{an}{sign}, DI: {cdi}{sign}/{di}{sign}, FE: {cfe}{sign}/{fe}{sign}, HA: {cha}{sign}/{ha}{sign}, NE: {cne}{sign}/{ne}{sign}, SA: {csa}{sign}/{sa}{sign}, SU: {csu}{sign}/{su}{sign}'.format(\
+            overall_score /= float(self.__all_samples_counter) *0.01
+
+        return 'TOTAL: {overall_score}\nAN: {can}{sign}/{an}{sign}, DI: {cdi}{sign}/{di}{sign}, FE: {cfe}{sign}/{fe}{sign}, HA: {cha}{sign}/{ha}{sign}, NE: {cne}{sign}/{ne}{sign}, SA: {csa}{sign}/{sa}{sign}, SU: {csu}{sign}/{su}{sign}'.format(\
             an=self.__classes_counter['AN'], \
             di=self.__classes_counter['DI'], \
             fe=self.__classes_counter['FE'], \
@@ -67,6 +74,7 @@ class EmotionsStatisticalInfoModel:
             csa=self.__correct_samples_counter['SA'], \
             csu=self.__correct_samples_counter['SU'], \
             sign=sign, \
+            overall_score=overall_score, \
         )
 
     def count2percentage(self):
